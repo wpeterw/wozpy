@@ -1,9 +1,10 @@
 import logging
-from typing import Any
+from typing import Any, Type
 
 import requests
 from requests.exceptions import RequestException
 
+from .models.models import Address
 from .settings import config
 
 
@@ -68,11 +69,32 @@ class Wozpy:
 
         return nummeraanduiding_ids
 
-    def get_woz_value(self, address: str) -> list[dict]:
-        """Get the WOZ information for wozwaardeloket.nl"""
-        results = []
+    def get_woz_value(self, address: Type[Address]) -> list[dict]:
+        """
 
-        nummeraanduiding_ids = self.__get_nummeraanduiding_id(address)
+        Get the WOZ (Waardering Onroerende Zaken) information for wozwaardeloket.nl.
+
+        Args:
+            address (Dict[str, str]): A dictionary representing the address information.
+                Example:
+                {
+                    "postcode": "1234AB",
+                    "house_number": "42",
+                    "house_number_extension": "A"
+                }
+
+        Returns:
+            List[Dict]: A list of dictionaries containing the WOZ information for the specified address.
+                        Each dictionary represents information for a specific WOZ object.
+
+        Raises:
+            requests.exceptions.RequestException: If there is an issue with the HTTP request to wozwaardeloket.nl.
+            ValidationError: If the provided address does not adhere to the expected structure.
+        """
+
+        results = []
+        address = Address(**address)
+        nummeraanduiding_ids = self.__get_nummeraanduiding_id(address.full_address)
         headers = {
             "Cookie": f"LB_STICKY={self.cookie.get('LB_STICKY')}; SESSION={self.cookie.get('SESSION')}"
         }
@@ -85,6 +107,4 @@ class Wozpy:
         return results
 
 
-wozpy = Wozpy(config.Config())
-wozpy = Wozpy(config.Config())
 wozpy = Wozpy(config.Config())

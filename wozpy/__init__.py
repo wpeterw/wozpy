@@ -11,8 +11,8 @@ Unofficial Python wrapper for the Wozwaardeloket API.
 
 Basic usage:
 
-   >>> import wozpy
-   >>> r = requests.get('https://www.python.org')
+   >>> from wozpy import wozpy
+   >>> woz = wozpy.get_woz_value({"postcode": "3645AE", "house_number": "141", "house_number_extension": "D"})
    >>> 
    >>> 
 """

@@ -35,7 +35,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -47,6 +47,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    needs: sonarqube
 
     steps:
     - name: Checkout code
@@ -76,3 +77,27 @@ jobs:
         name: check-iban
         fail_ci_if_error: true
         token: ${{secrets.CODECOV_TOKEN}}
+
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Poetry
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install project dependencies
+      run: poetry install
+
+    - name: Build project
+      run: poetry build
