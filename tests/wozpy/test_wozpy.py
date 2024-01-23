@@ -1,15 +1,9 @@
 from unittest.mock import Mock, patch
 
-import pytest
-
-from wozpy.wozpy import wozpy  # Adjust the import path based on your project structure
+from wozpy.wozpy import wozpy
 
 
 class TestWozpy:
-    @pytest.fixture
-    def mock_settings(self):
-        return Mock(cookie_url="http://example.com/cookie")
-
     @patch("requests.post")
     def test_get_cookie_success(self, mock_post):
         # Mocking the requests.post method to return a response with cookies
@@ -24,3 +18,18 @@ class TestWozpy:
         result = wozpy_instance._Wozpy__get_cookie()
 
         assert result == {"mock_cookie": "mock_value"}
+
+    def test_get_woz_address_id_success(self):
+        address = "3645AE 141D"
+        result = wozpy._Wozpy__get_woz_address_id(address)
+        assert result == ["adr-53c3d765a99c3d43cd02d777f13aee86"]
+
+    def test_get_nummeraanduiding_id_success(self):
+        address = "3645AE 141D"
+        result = wozpy._Wozpy__get_nummeraanduiding_id(address)
+        assert result == ["0736200000104061"]
+
+    def test_get_nummeraanduiding_id_request_error(self):
+        address = "Vinkeveen"
+        result = wozpy._Wozpy__get_nummeraanduiding_id(address)
+        assert result == []

@@ -110,7 +110,7 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/<package-name>
+      url: https://test.pypi.org/p/wozpy
 
     permissions:
       id-token: write
