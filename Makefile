@@ -35,7 +35,7 @@ format/ruff:
 
 .PHONY: test
 test:
-	poetry run pytest src
+	poetry run pytest .
 
 .PHONY: build
 build:

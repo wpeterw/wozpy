@@ -22,3 +22,4 @@ class Address(BaseModel):
         if not re.match("^\d{4}\s?\w{2}$", v):
             raise ValueError("must follow regex ^\d{4}\s?\w{2}$")
         return v
+ 
