@@ -12,6 +12,8 @@ Install:
 
 ```
 poetry add wozpy
+or if you must:
+pip install wozpy
 ```
 Usage:
 
