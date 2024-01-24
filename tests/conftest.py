@@ -4,5 +4,5 @@ import pytest
 
 
 @pytest.fixture
-def mock_settings(self):
+def mock_settings():
     return Mock(cookie_url="https://example.com/cookie")

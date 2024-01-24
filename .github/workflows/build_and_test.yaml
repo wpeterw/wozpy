@@ -68,6 +68,12 @@ jobs:
     - name: Run Pytest
       run: |
         poetry run pytest -x --cov-report term-missing --cov-report=xml:coverage.xml --cov=.
+
+    - name: Upload coverage.xml
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage.xml
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -103,25 +109,18 @@ jobs:
       run: poetry build
 
   publish-to-testpypi:
-    name: Publish Python 🐍 distribution 📦 to TestPyPI
     needs:
     - build
     runs-on: ubuntu-latest
 
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/wozpy
-
-    permissions:
-      id-token: write
-
     steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Publish to testpypi
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        poetry config pypi-token.pypi ${{secrets.PYPI_TOKEN}}
+        poetry config repositories.test-pypi https://test.pypi.org/legacy/
+        poetry build
+        poetry publish

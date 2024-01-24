@@ -107,4 +107,4 @@ class Wozpy:
         return results
 
 
-wozpy = Wozpy(config.Config())
+woz = Wozpy(config.Config())

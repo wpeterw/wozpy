@@ -3,6 +3,8 @@
 [![codecov](https://codecov.io/gh/wpeterw/wozpy/graph/badge.svg?token=RZRGLN432W)](https://codecov.io/gh/wpeterw/wozpy)
 [![Quality Gate Status](https://sonar.randombits.nl/api/project_badges/measure?project=wozpy&metric=alert_status&token=sqb_2339051b02256716cd52bed1a33d1065c76d0fef)](https://sonar.randombits.nl/dashboard?id=wozpy)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2a26fc9504ccd91cbf1d/maintainability)](https://codeclimate.com/github/wpeterw/wozpy/maintainability)
+![Workflow](https://github.com/wpeterw/wozpy/actions/workflows/build_and_test.yaml/badge.svg)
+[![PyPI version](https://badge.fury.io/py/wozpy.svg)](https://badge.fury.io/py/wozpy)
 
 # Pythonpackage to get data from wozwaardeloket.nl
 
@@ -14,9 +16,9 @@ poetry add wozpy
 Usage:
 
 ```
-from wozpy import wozpy
+from wozpy.woz import woz
 
-wozpy.get_woz_value({"postcode": "3645AE", "house_number": "141", "house_number_extension": "d"}
+woz.get_woz_value({"postcode": "3645AE", "house_number": "141", "house_number_extension": "d"}
 
 ```
 
