@@ -96,7 +96,7 @@ class Wozpy:
         address = Address(**address)
         nummeraanduiding_ids = self.__get_nummeraanduiding_id(address.full_address)
         headers = {
-            "Cookie": f"LB_STICKY={self.cookie.get('LB_STICKY')}; JSESSIONID={self.cookie.get('JSESSIONID')}"
+            "Cookie": f"LB_STICKY={self.cookie.get('LB_STICKY')}; JSESSIONIDgir={self.cookie.get('JSESSIONID')}"
         }
 
         for nummeraanduiding_id in nummeraanduiding_ids:
