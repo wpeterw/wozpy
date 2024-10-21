@@ -3,6 +3,7 @@ import requests
 import logging
 from .models.models import ModelItem
 from pydantic import ValidationError
+
 logger = logging.getLogger(__name__)
 
 
@@ -110,7 +111,7 @@ class Wozpy:
             return []
 
         results = []
-        
+
         for nummeraanduiding_id in nummeraanduiding_ids:
             try:
                 response = requests.get(f"{base_url}{nummeraanduiding_id}", timeout=5)

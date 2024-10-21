@@ -4,18 +4,19 @@ import requests
 from wozpy.wozpy import Wozpy
 from wozpy.models.models import ModelItem
 
+
 # Unit Tests
 @pytest.fixture
 def service():
     return Wozpy()
 
 
-@patch.object(Wozpy, '_Wozpy__get_nummeraanduiding_id')
-@patch('requests.get')
+@patch.object(Wozpy, "_Wozpy__get_nummeraanduiding_id")
+@patch("requests.get")
 def test_get_woz_value_success(mock_get, mock_get_nummeraanduiding_id, service):
     # arrange
-    mock_get_nummeraanduiding_id.return_value = ['id1', 'id2']
-    
+    mock_get_nummeraanduiding_id.return_value = ["id1", "id2"]
+
     # Create a mock response that matches the structure of ModelItem
     mock_response_1 = Mock()
     mock_response_1.json.return_value = {
@@ -34,18 +35,24 @@ def test_get_woz_value_success(mock_get, mock_get_nummeraanduiding_id, service):
             "adresseerbaarobjectid": 1680010000000777,
             "nummeraanduidingid": 1680200000055555,
             "verbondenAdresseerbareObjecten": [1680010000000999],
-            "ontleendeAdresseerbareObjecten": [1680010000000888]
+            "ontleendeAdresseerbareObjecten": [1680010000000888],
         },
-        "wozWaarden": [
-            {"peildatum": "2023-01-01", "vastgesteldeWaarde": 492000}
-        ],
+        "wozWaarden": [{"peildatum": "2023-01-01", "vastgesteldeWaarde": 492000}],
         "panden": [],
         "kadastraleObjecten": [
-            {"kadastraleGemeenteCode": "ALO00", "kadastraleSectie": "Z", "kadastraalPerceelNummer": "1165"},
-            {"kadastraleGemeenteCode": "ALO00", "kadastraleSectie": "Z", "kadastraalPerceelNummer": "1164"}
-        ]
+            {
+                "kadastraleGemeenteCode": "ALO00",
+                "kadastraleSectie": "Z",
+                "kadastraalPerceelNummer": "1165",
+            },
+            {
+                "kadastraleGemeenteCode": "ALO00",
+                "kadastraleSectie": "Z",
+                "kadastraalPerceelNummer": "1164",
+            },
+        ],
     }
-    
+
     mock_response_2 = Mock()
     mock_response_2.json.return_value = {
         "wozObject": {
@@ -63,15 +70,17 @@ def test_get_woz_value_success(mock_get, mock_get_nummeraanduiding_id, service):
             "adresseerbaarobjectid": 1680010000000383,
             "nummeraanduidingid": 1680200000011659,
             "verbondenAdresseerbareObjecten": [1680010000000383],
-            "ontleendeAdresseerbareObjecten": [1680010000000383]
+            "ontleendeAdresseerbareObjecten": [1680010000000383],
         },
-        "wozWaarden": [
-            {"peildatum": "2023-01-01", "vastgesteldeWaarde": 500000}
-        ],
+        "wozWaarden": [{"peildatum": "2023-01-01", "vastgesteldeWaarde": 500000}],
         "panden": [],
         "kadastraleObjecten": [
-            {"kadastraleGemeenteCode": "ALO00", "kadastraleSectie": "Z", "kadastraalPerceelNummer": "1166"}
-        ]
+            {
+                "kadastraleGemeenteCode": "ALO00",
+                "kadastraleSectie": "Z",
+                "kadastraalPerceelNummer": "1166",
+            }
+        ],
     }
 
     mock_get.side_effect = [mock_response_1, mock_response_2]
@@ -96,28 +105,32 @@ def test_get_woz_value_success(mock_get, mock_get_nummeraanduiding_id, service):
     assert mock_get.call_count == 2
 
 
-@patch.object(Wozpy, '_Wozpy__get_nummeraanduiding_id')
-@patch('requests.get')
-def test_get_woz_value_no_nummeraanduiding_ids(mock_get, mock_get_nummeraanduiding_id, service):
+@patch.object(Wozpy, "_Wozpy__get_nummeraanduiding_id")
+@patch("requests.get")
+def test_get_woz_value_no_nummeraanduiding_ids(
+    mock_get, mock_get_nummeraanduiding_id, service
+):
     # arrange
     mock_get_nummeraanduiding_id.return_value = []
 
     address = "Test Address"
-    
+
     # act
     result = service.get_woz_value(address)
 
     # assert
-    assert result == []  
+    assert result == []
     mock_get_nummeraanduiding_id.assert_called_once_with(address)
     mock_get.assert_not_called()
 
 
-@patch.object(Wozpy, '_Wozpy__get_nummeraanduiding_id')
-@patch('requests.get')
-def test_get_woz_value_request_exception(mock_get, mock_get_nummeraanduiding_id, service):
+@patch.object(Wozpy, "_Wozpy__get_nummeraanduiding_id")
+@patch("requests.get")
+def test_get_woz_value_request_exception(
+    mock_get, mock_get_nummeraanduiding_id, service
+):
     # arrange
-    mock_get_nummeraanduiding_id.return_value = ['id1']
+    mock_get_nummeraanduiding_id.return_value = ["id1"]
     mock_get.side_effect = requests.RequestException("API request failed")
 
     address = "Test Address"
