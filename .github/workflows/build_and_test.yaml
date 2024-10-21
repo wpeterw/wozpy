@@ -47,7 +47,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: sonarqube
+    # needs: sonarqube
 
     steps:
     - name: Checkout code
@@ -80,7 +80,7 @@ jobs:
       with:
         file: ./coverage.xml
         flags: unittests
-        name: check-iban
+        name: wozpy
         fail_ci_if_error: true
         token: ${{secrets.CODECOV_TOKEN}}
 
