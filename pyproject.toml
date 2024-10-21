@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wozpy"
-version = "0.1.5"
+version = "0.2.0"
 description = "Simple package to retrieve data from wozwaardeloket.nl"
 authors = ["wpeterw <off@on.nl>"]
 readme = "README.md"
